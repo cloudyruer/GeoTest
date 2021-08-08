@@ -27,8 +27,15 @@ const geoReverse = ([lat, lng]) => {
       console.log(data);
       const { latitude: lat } = data; //所在區域的緯度
       const { longitude: lng } = data; //所在區域的經度
-      const { city } = data; //所在城市 e.g.台北市
-      const { locality } = data; //所在區  e.g. 中正區
+      let { city } = data; //所在城市 e.g.台北市 (因桃園改為市 因此這邊改設為let)
+      let { locality } = data; //所在區  e.g. 中正區  (因桃園改為市 因此這邊改設為let)
+
+      // fix 桃園
+      if (city === '桃園縣') {
+        city = '桃園市';
+        locality = locality.slice(0, -1) + '區';
+      }
+
       console.log(lat, lng, city, locality);
 
       // from newWhereAmI
