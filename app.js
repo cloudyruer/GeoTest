@@ -3,7 +3,7 @@ const latText = document.querySelector('.lat');
 const lngText = document.querySelector('.lng');
 const cityText = document.querySelector('.city');
 const localityText = document.querySelector('.locality');
-
+const accuracyText = document.querySelector('.accuracy');
 // 瀏覽器API 取得當前地理位置
 const newWhereAmI = () =>
   new Promise((resolve, reject) => {
@@ -17,7 +17,7 @@ const newWhereAmI = () =>
     navigator.geolocation.getCurrentPosition(resolve, reject, options);
   });
 
-const geoReverse = ([lat, lng]) => {
+const geoReverse = ([lat, lng, accuracy]) => {
   fetch(
     `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=zh`
   )
@@ -41,6 +41,7 @@ const geoReverse = ([lat, lng]) => {
       // from newWhereAmI
       latText.innerText = lat.toFixed(3);
       lngText.innerText = lng.toFixed(3);
+      accuracyText.innerText = accuracy + ' (米)';
       // from geoReverse
       cityText.innerText = city;
       localityText.innerText = locality;
@@ -62,7 +63,10 @@ const renderLocationInfo = () => {
       console.log(`當前經度: ${lng}`);
       console.log(`當前誤差值: ${accuracy}(單位米)`);
       // return [lat.toFixed(5), lng.toFixed(5)];
-      return [lat, lng];
+      // return [lat, lng];
+
+      // NOTE 測試用: 加入 誤差值 accuracy
+      return [lat, lng, accuracy];
     })
     .then(res => geoReverse(res));
 };
