@@ -41,7 +41,7 @@ const geoReverse = ([lat, lng, accuracy]) => {
       // from newWhereAmI
       latText.innerText = lat.toFixed(3);
       lngText.innerText = lng.toFixed(3);
-      accuracyText.innerText = accuracy + ' (米)';
+      accuracyText.innerText = accuracy.toFixed(1) + ' (米)';
       // from geoReverse
       cityText.innerText = city;
       localityText.innerText = locality;
